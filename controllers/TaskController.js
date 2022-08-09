@@ -1,4 +1,5 @@
-const Task = require("../models/taskModel");
+const db = require("../models/index");
+const Task = db.tasks;
 const {Op}= require("sequelize");
 
 class TaskController {
@@ -24,12 +25,14 @@ class TaskController {
 			});
 
 			res.status(200).send({
+				status: 200,
 				message: "Task berhasil diambil",
 				task: data,
 			});
 		} catch (error) {
             console.log(error)
 			res.status(400).send({
+				status: 400,
 				message: "Terjadi masalah dalam pengambilan data task",
 				error: error,
 			});
@@ -47,11 +50,13 @@ class TaskController {
 			});
 
 			res.status(200).send({
+				status: 200,
 				message: "Task berhasil dibuat",
 				task: action,
 			});
 		} catch (error) {
 			res.status(400).send({
+				status: 400,
 				message: "Terjadi masalah dalam pembuatan task",
 				error: error,
 			});
@@ -76,11 +81,13 @@ class TaskController {
 			);
 
 			res.status(200).send({
+				status: 200,
 				message: "Task berhasil diperbarui",
 				task: action,
 			});
 		} catch (error) {
 			res.status(400).send({
+				status: 400,
 				message: "Terjadi masalah dalam pembuatan task",
 				error: error,
 			});
@@ -96,11 +103,13 @@ class TaskController {
 			});
 
 			res.status(200).send({
+				status: 200,
 				message: "Task berhasil dihapus",
 			});
 		} catch (error) {
 			console.log(error);
 			res.status(400).send({
+				status: 400,
 				message: "Terjadi masalah dalam penghapusan task",
 				error: error,
 			});

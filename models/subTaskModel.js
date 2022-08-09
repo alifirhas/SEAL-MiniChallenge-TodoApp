@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-	const tasks = sequelize.define("tasks", {
+	const subtasks = sequelize.define("subtasks", {
 		id: {
 			allowNull: false,
 			autoIncrement: true,
@@ -34,5 +34,5 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.DATE,
 		}
 	});
-	return tasks;
+	return subtasks;
 };
