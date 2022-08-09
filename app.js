@@ -9,11 +9,11 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/user", userRouter);
 app.use("/", (req, res) => {
-	res.status(200).send({
-		message: "Selamat data di API todo apps",
-	});
+  res.status(200).send({
+    message: "Selamat data di API todo apps",
+  });
 });
 
 app.listen(PORT, () => {
-	console.log(`Server berjalan di port ${PORT}`);
+  console.log(`Server berjalan di port ${PORT}`);
 });
