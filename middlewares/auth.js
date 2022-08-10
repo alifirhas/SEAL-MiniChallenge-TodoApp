@@ -6,13 +6,15 @@ async function verifyToken(req, res, next) {
     const token = authHeader && authHeader.split(" ")[1];
 
     if (!token) {
-        return res.json({
+        return res.status(401).json({
+            status: 401,
             message: "Access Denied! Unauthorized User",
         });
     } else {
         jsonwebtoken.verify(token, process.env.SECRET_KEY, (err, authData) => {
             if (err) {
-                res.json({
+                res.status(401).json({
+                    status: 401,
                     message: "Invalid Token...",
                 });
             } else {
