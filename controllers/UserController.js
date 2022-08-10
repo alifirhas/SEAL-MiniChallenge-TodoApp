@@ -65,7 +65,7 @@ exports.login = async (req, res, next) => {
     if (!checkemail) {
       return res.status(409).json({
         status: 409,
-        message: "Invalid number or password",
+        message: "Invalid email or password",
       });
     }
 
@@ -81,7 +81,7 @@ exports.login = async (req, res, next) => {
         user: user,
       },
         process.env.SECRET_KEY, {
-        expiresIn: "10d",
+        expiresIn: "6h",
       }
       );
 
@@ -93,7 +93,7 @@ exports.login = async (req, res, next) => {
     } else {
       return res.status(401).json({
         status: 401,
-        message: "Invalid number or password"
+        message: "Invalid email or password"
       });
     }
   } catch (e) {
