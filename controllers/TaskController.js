@@ -16,7 +16,7 @@ class TaskController {
             if(req.query.due_date){
                 filter.due_date = {[Op.gte]: req.query.due_date}
             }
-            if(req.query.start_date || req.query.end_date){
+            if(req.query.start_date && req.query.end_date){
                 filter.due_date = {[Op.between]: [req.query.start_date, req.query.end_date]}
             }
 
