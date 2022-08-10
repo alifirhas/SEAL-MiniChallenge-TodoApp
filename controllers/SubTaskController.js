@@ -1,5 +1,4 @@
 const jsonwebtoken = require("jsonwebtoken");
-const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const db = require("../models/index");
 const subTask = db.subtask;
 
