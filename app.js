@@ -6,7 +6,10 @@ const { userRouter } = require("./routes/UserRouter");
 const { taskRouter } = require("./routes/TaskRouter");
 const { subTaskRouter } = require("./routes/SubTaskRouter");
 const { verifyToken } = require("./middlewares/auth");
+const cors = require('cors')
 
+
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
