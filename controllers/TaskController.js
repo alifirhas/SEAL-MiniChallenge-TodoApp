@@ -1,5 +1,6 @@
 const db = require("../models/index");
 const Task = db.tasks;
+const subTask = db.subtask;
 const { Op } = require("sequelize");
 const jsonwebtoken = require("jsonwebtoken");
 
@@ -33,16 +34,17 @@ class TaskController {
 
 			const data = await Task.findAll({
 				where: filter,
+				include: subTask
 			});
 
-			res.status(200).send({
+			return res.status(200).json({
 				status: 200,
 				message: "Task berhasil diambil",
 				task: data,
 			});
 		} catch (error) {
 			console.log(error);
-			res.status(400).send({
+			return res.status(400).json({
 				status: 400,
 				message: "Terjadi masalah dalam pengambilan data task",
 				error: error,
@@ -67,13 +69,13 @@ class TaskController {
 				userId: decoded.user.id,
 			});
 
-			res.status(200).send({
+			return res.status(200).json({
 				status: 200,
 				message: "Task berhasil dibuat",
 				task: action,
 			});
 		} catch (error) {
-			res.status(400).send({
+			return res.status(400).json({
 				status: 400,
 				message: "Terjadi masalah dalam pembuatan task",
 				error: error,
@@ -105,13 +107,20 @@ class TaskController {
 				}
 			);
 
-			res.status(200).send({
-				status: 200,
-				message: "Task berhasil diperbarui",
-				task: action,
-			});
+			if (action[0] === 0) {
+				return res.status(400).json({
+					status: 400,
+					message: "Task tidak ditemukan",
+				});
+			} else {
+				return res.status(200).json({
+					status: 200,
+					message: "Task berhasil diperbarui"
+				});
+			}
+
 		} catch (error) {
-			res.status(400).send({
+			return res.status(400).json({
 				status: 400,
 				message: "Terjadi masalah dalam pembuatan task",
 				error: error,
@@ -121,25 +130,27 @@ class TaskController {
 
 	async delete(req, res) {
 		try {
-			const authToken = req.headers.authorization;
-			const decoded = jsonwebtoken.verify(
-				authToken.split(" ")[1],
-				process.env.SECRET_KEY
-			);
-
 			const action = await Task.destroy({
 				where: {
 					id: req.params.id,
 				},
 			});
 
-			res.status(200).send({
-				status: 200,
-				message: "Task berhasil dihapus",
-			});
+			if (action[0] === 0) {
+				return res.status(400).json({
+					status: 400,
+					message: "Task tidak ditemukan",
+				});
+			} else {
+				return res.status(200).json({
+					status: 200,
+					message: "Task berhasil dihapus",
+				});
+			}
+
 		} catch (error) {
 			console.log(error);
-			res.status(400).send({
+			return res.status(400).json({
 				status: 400,
 				message: "Terjadi masalah dalam penghapusan task",
 				error: error,
